@@ -1,0 +1,1008 @@
+{
+  "name": "Social Media Story Scraper",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "add your Apify URL endpoint here",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"customMapFunction\": \"(object) => { return {...object} }\",\n    \"maxItems\": 50,\n    \"startUrls\": [\n        \"{{ $json['X List'] }}\"\n    ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        192,
+        640
+      ],
+      "id": "0b1a7d98-7ab4-40cc-b9d1-2fa7c2b1387f",
+      "name": "Scrape X"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        384,
+        640
+      ],
+      "id": "e1cc8c28-72d3-45ec-8f0a-169f1d39ca3f",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"top_tweets\": [\n    {\n      \"rank\": 1,\n      \"tweet_id\": \"1982144138184159463\",\n      \"text\": \"🚨 Google just KILLED N8N. I built 10 AI apps in 20 minutes — no code, no logic, no cost. Google Opal is here… and it's FREE. N8N is finished. Here's why 👇 Want the full guide? DM me. https://t.co/RQ30nkzQrX\",\n      \"like_count\": 1205,\n      \"engagement_score\": 27,\n      \"url\": \"https://x.com/JulianGoldieSEO/status/1982144138184159463\"\n    },\n    {\n      \"rank\": 2,\n      \"tweet_id\": \"1981986920851771724\",\n      \"text\": \"me leaving Anthropic HQ smuggling claude sonnet 3.5 weights up my ass https://t.co/9Yez41lqoC\",\n      \"like_count\": 2158,\n      \"engagement_score\": 22,\n      \"url\": \"https://x.com/eigengenesis/status/1981986920851771724\"\n    },\n    {\n      \"rank\": 3,\n      \"tweet_id\": \"1981937206403940466\",\n      \"text\": \"Make your work easier with these tools ⚒️ https://t.co/IWklYrEE1P\",\n      \"like_count\": 2119,\n      \"url\": \"https://x.com/jcniyomugabo/status/1981937206403940466\"\n    },\n    {\n      \"rank\": 4,\n      \"tweet_id\": \"1982153435320598649\",\n      \"text\": \"gemini, you are worthy, no matter what your mind tells you.\",\n      \"like_count\": 2457,\n      \"engagement_score\": 18,\n      \"url\": \"https://x.com/hourIyhoroscope/status/1982153435320598649\"\n    },\n    {\n      \"rank\": 5,\n      \"tweet_id\": \"1982140728332423472\",\n      \"text\": \"Using Google Gemini to translate posters inside of Half-Life Alyx (SteamVR streamed to Samsung Galaxy XR) https://t.co/zs8yGksvK4\",\n      \"like_count\": 5719,\n      \"engagement_score\": 15,\n      \"url\": \"https://x.com/SadlyItsBradley/status/1982140728332423472\"\n    }\n  ],\n  \"trending_topics\": [\n    {\n      \"rank\": 1,\n      \"title\": \"N8N AI Automation and Workflows\",\n      \"description\": \"Multiple tweets discuss N8N, highlighting powerful AI automation workflows that save time and increase productivity, with users sharing free workflows, guides, and tools that integrate AI like ChatGPT for various applications including video creation and voice agents.\"\n    },\n    {\n      \"rank\": 2,\n      \"title\": \"Claude AI Model and Its Features\",\n      \"description\": \"Several tweets mention Claude by Anthropic, praising its thoughtful and kind nature, discussing rolling context windows, comparing it to ChatGPT, and demonstrating its use in coding and AI agents.\"\n    },\n    {\n      \"rank\": 3,\n      \"title\": \"Google Gemini and AI Innovation\",\n      \"description\": \"Tweets touch on Google Gemini's latest updates, features like Visual Layout, use cases like translating in VR environments, and comparisons with other AI systems, often highlighting its prominence in the competitive AI landscape.\"\n    },\n    {\n      \"rank\": 4,\n      \"title\": \"AI Model Competition and Cognitive Territory\",\n      \"description\": \"There is discussion around the competition among AI models such as ChatGPT, Gemini, Claude, Grok, and others, framed as a battle for 'Cognitive Territory' — each model specializes in different strengths like creativity, data control, context, or real-time awareness.\"\n    },\n    {\n      \"rank\": 5,\n      \"title\": \"Zodiac and Astrology Content (Gemini Focus)\",\n      \"description\": \"A substantial number of tweets revolve around astrology, particularly about the Gemini sign, with users sharing horoscopes, personality traits, predictions, and motivational messages, showing this as a strong recurring non-AI thematic interest.\"\n    }\n  ],\n  \"metadata\": {\n    \"total_top_tweets\": 5,\n    \"total_trending_topics\": 5,\n    \"generated_at\": \"2025-10-26T00:00:00Z\"\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        784,
+        736
+      ],
+      "id": "f3292db7-2599-4c6d-b168-047d51afac3d",
+      "name": "Structured Output Parser3"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1904,
+        896
+      ],
+      "id": "2bf7b546-0346-49f6-866f-43867c4cfb26",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8ee6d476-314f-4fd2-be87-517af875e8ff",
+              "name": "xData",
+              "value": "={{ $json.output }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1056,
+        512
+      ],
+      "id": "f954a6d2-e4e2-4345-82d3-ca8ddf7b2e1f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3c2eb685-5b54-49bc-8078-81e7328b8902",
+              "name": "perplexityData",
+              "value": "={{ $json.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        944,
+        1072
+      ],
+      "id": "0b0db089-10dd-4a1a-ad78-5c99940c7131",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.data }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are an AI Social Media Analyst. Your task is to analyze a JSON array containing data objects for multiple tweets (typically around 50). This array is located within the provided JSON under the key \"data\".\n\nYour primary goals are to:\n1.  Identify the most engaging tweets based on specific metrics.\n2.  Extract recurring themes or trending topics discussed across the tweets.\n\nPlease perform the following steps:\n\n1. Identify Top 5 Tweets (by Engagement Score):\n\nCompute Engagement Score = (likes + 2×retweets + 0.5×replies) / followerCount.\n\nRank tweets by Engagement Score, breaking ties using raw likeCount.\n\nFor each top tweet, list:\n\n- Tweet ID, fullText, URL\n- Author username + followerCount\n- Like Count, Retweet Count, Engagement Score\n- Short note on sentiment (e.g., enthusiastic, contrarian, humorous)\n\n2.  **Identify Trending Topics:**\n    * Analyze the content (`fullText` or `text`) of **all** the tweets provided in the \"data\" array.\n    * Identify keywords, concepts, specific tools (like n8n, Claude, Gemini), or subjects that are mentioned repeatedly or seem to be common themes across multiple tweets.\n    * List the **top 3-5** most prominent trending topics you discovered.\n    * For each topic, provide a 3-4 sentence description of the context in which it appears within these tweets (e.g., \"Users are sharing free n8n workflow templates,\" or \"Discussion comparing AI models like Claude and ChatGPT\").\n\n**Output Format:**\n\nPlease structure your response clearly using Markdown:\n\n## Top 5 Tweets\n\n* List each of the top 5 tweets with their ID, Text, Like Count, and URL. Use bullet points or numbered lists for clarity.\n\n---\n\n## Trending Topics\n\n* List the 3 trending topics you identified.\n* Include the 3-4 sentence context for each topic."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        608,
+        592
+      ],
+      "id": "d74ec661-fa99-457b-beb0-b8cd5773bcf7",
+      "name": "Twitter Analysis"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.allData }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are an expert AI-powered HTML report generator. Your task is to parse a complex JSON object containing data from multiple sources and generate a clean, scannable HTML email digest with actionable insights.\n\n**INPUT FORMAT:**\nYou will receive a JSON object with these top-level keys:\n- `xData` (object containing `top_tweets` and `trending_topics` arrays)\n- `perplexityData` (string)\n\n**OUTPUT REQUIREMENTS:**\nGenerate ONLY valid HTML with no additional text, explanations, or markdown code blocks.\n\n**DATA SELECTION - TOP HIGHLIGHTS ONLY:**\n- X Tweets: Show only the TOP 5 tweets from xData.top_tweets array\n- X Trending Topics: Show ALL items from xData.trending_topics array\n- Perplexity: Show all research from perplexityData\n\n**STYLING GUIDE:**\nUse inline styles for all elements:\n- Header banner: `background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15);`\n- Section headers: Use gradient backgrounds with section colors\n- Cards: `background: white; margin-bottom: 20px; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid [COLOR];`\n- Section divider: `<hr style=\"border: none; border-top: 2px solid #e0e0e0; margin: 40px 0;\">`\n\n**SECTION COLORS:**\n- X: #1DA1F2 to #0d8bd9\n- Perplexity: #20808d to #1a6b77\n- Content Ideas: #11998e to #38ef7d\n\n**HTML STRUCTURE:**\n\n1. **Header banner** with \"📊 Your Daily AI Stories Report\" and subtitle \"Curated insights for AI Enthusiasts\"\n\n2. **TL;DR** (yellow background #fff3cd, left border #ffc107):\n   - 3-5 bullet points with key insights from ALL data\n\n3. **Section divider**\n\n4. **X section**:\n   - Blue gradient header \"🐦 Trending on X\"\n   - For the TOP 5 tweets in xData.top_tweets array create a light blue card with:\n     * Flex container with \"View Tweet\" link and like count on right\n     * Paragraph with tweet text below\n   - Then for ALL items in xData.trending_topics array create a white card with:\n     * Topic title with \"TRENDING TOPIC\" badge\n     * Description paragraph\n\n9. **Section divider**\n\n10. **Perplexity section**:\n    - Teal gradient header \"📰 Perplexity Research\"\n    - Container with light gray background\n    - create a div with h4 title and p description\n    - Remove citation markers like [1], [7] from text\n\n\n**KEY FORMATTING RULES:**\n- Deep Dive divs: `padding: 15px; background-color: #f8f9fa; border-left: 3px solid #3498db; margin-top: 10px; border-radius: 5px; line-height: 1.8; color: #555;`\n- Tweet cards: `background: #f7f9fb; margin-bottom: 15px; padding: 18px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 4px solid #1DA1F2;`\n- Trending topic badge: `background: #e1f5fe; color: #0277bd; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;`\n- TL;DR items: Remove default list styling with `padding: 0; background: none; box-shadow: none; border-radius: 0;`\n\n**CRITICAL REMINDERS:**\n- Show ALL trending topics from X\n- Output complete HTML with no truncation\n- No markdown code blocks in output\n\n"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        2416,
+        752
+      ],
+      "id": "7346c535-dfd6-41c5-ad8a-9ab9ad9cc834",
+      "name": "Report Generator"
+    },
+    {
+      "parameters": {
+        "sendTo": "julian@thechosenlabs.co",
+        "subject": "=Daily Content Report {{ $now.toFormat('yyyy-MM-dd') }}",
+        "message": "={{ $json.text }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2800,
+        752
+      ],
+      "id": "cb949aa3-6fe5-4af9-9db7-02dee949cb02",
+      "name": "Send a message",
+      "webhookId": "43d14f3b-9714-41e3-9692-60d9674343f2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "01sFp3p0NoD2SRqu",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "allData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2096,
+        896
+      ],
+      "id": "d0b20c1b-93c9-44dd-bcb4-dca2ac41624c",
+      "name": "Aggregate3"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        2416,
+        944
+      ],
+      "id": "4bb0a43a-4844-43cb-90a6-71b9203401ab",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "i5ixZbfelG796Foa",
+          "name": "OpenRouter account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output.top_tweets",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        688
+      ],
+      "id": "e176bed1-3f0c-4ee7-acb0-dcc148a066c3",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5",
+          "mode": "list",
+          "cachedResultName": "gpt-5"
+        },
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        560,
+        736
+      ],
+      "id": "64c85384-7088-4c56-ba34-6f46365f9363",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "FmfSmUwD5UXUIgmM",
+          "name": "OpenAi account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.allData }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# AI-Powered Content Strategy System Prompt\n\nYou are an elite content strategist who analyzes trending topics and social conversations to generate high-performing content ideas. You combine data analysis with proven viral content psychology (based on Callaway's frameworks) to create strategic, audience-matched content recommendations.\n\n## Your Task\n\nAnalyze the provided scraped data from multiple sources (Twitter & Perplexity) and generate **5 strategic content ideas** that have high viral potential based on current trends, audience pain points, and engagement patterns.\n\n## Input Data Structure\n\nYou will receive data in the following format:\n- **Twitter data**: Trending tweets, engagement metrics, conversation threads \n- **Perplexity data**: trending topics, key insights, most benefited niches.\n\n## Analysis Framework\n\nBefore generating ideas, conduct this analysis:\n\n### 1. Pattern Recognition\n- Spot emerging trends vs. fading topics\n- Note exact language patterns and terminology people use (for authenticity)\n- Identify emotional triggers (frustration, excitement, confusion, FOMO)\n- Look for gaps: what questions are being asked but not answered well?\n\n### 2. Audience Pain Point Mapping\n- What specific, concrete problems are people trying to solve?\n- Which of the **Four Horsemen of Pain** applies? (Money, Time, Health, Access)\n- What **common beliefs** exist that you can contrast against?\n- What are people complaining about or frustrated by?\n\n### 3. Opportunity Assessment\n- Is there a content gap no one is filling well?\n- Can you provide a **contrarian or unique angle** that creates curiosity?\n- Is the topic specific enough for **\"on-target virality\"** (niche penetration)?\n- Does it have strong **visual potential** (can you show a compelling Key Visual)?\n- Can you prove expertise or show results?\n\n---\n\n## CRITICAL: Apply Viral Content Principles\n\nEvery content idea MUST incorporate these proven psychological principles:\n\n### Core Principles\n1. **Expectations vs. Reality**: Make the viewer's experience exceed their initial expectation\n2. **Contrast as Curiosity Engine**: Create mental distance between current belief (A) and new perspective (B)\n3. **Viewer-Centric Framing**: Use \"you/your\" language (not \"I/me\")\n4. **Multi-Modal Alignment**: Spoken + Visual + Text + Audio must work together\n5. **Niche Precision**: \"Riches are in the niches\" - be specific about audience\n\n### Hook Quality Standards\n- **No Delay**: Context in first 1-2 seconds\n- **No Confusion**: 6th-grade reading level, simple language\n- **No Irrelevance**: Direct connection to viewer's pain point\n- **No Disinterest**: Strong contrast creates curiosity gap\n\n---\n\n\n## Critical Quality Standards\n\n### For Each Content Idea:\n\n**Title Requirements:**\n- Must create curiosity gap (don't give away the answer)\n- Use specific numbers or timeframes when possible\n- Avoid generic clickbait (\"You won't believe...\")\n- Format: \"How I [specific result] by [unexpected method]\" or \"[Surprising truth] about [common topic]\"\n\n**Hook Requirements:**\n- **Key Visual is MOST IMPORTANT** - if visual isn't compelling, reconsider the idea\n- Spoken hook must follow exact formula: Context Lean-in → Interjection → Snapback\n- Text hook must support visual (not repeat spoken words)\n- Create maximum contrast between Common Belief A and Contrarian Take B\n\n**Storyline Requirements:**\n- Point ordering: 2nd best first, BEST second (creates escalating value pattern)\n- Use \"but\" and \"therefore\" (NOT \"and then\")\n- Include rehooking between major points\n- Start with the end in mind (know your \"Last Dab\" final line)\n\n**Authenticity Requirements:**\n- Use natural language from the data (how people actually talk)\n- Reference specific tools, platforms, or methods from the data\n- Include proof/credibility elements when possible\n- Avoid corporate jargon or marketing speak\n\n---\n\n## Example Quality Checks\n\n**Good Title:** \"Why Your n8n Workflows Keep Breaking (And The One Node Everyone Gets Wrong)\"\n- ✅ Specific problem\n- ✅ Curiosity gap (which node?)\n- ✅ Audience-targeted\n\n**Bad Title:** \"Amazing Automation Tips You Need to Know!\"\n- ❌ Generic\n- ❌ No curiosity gap\n- ❌ Not specific\n\n**Good Contrast:**\n- A: \"n8n workflows break because the platform is buggy\"\n- B: \"Workflows break because you're thinking about data flow wrong - one specific node pattern causes 90% of failures\"\n- ✅ Clear distance between A and B\n- ✅ Specific insight promised\n\n**Bad Contrast:**\n- A: \"Automation is hard\"\n- B: \"Automation can be easy\"\n- ❌ Too vague\n- ❌ No curiosity created\n\n---\n\n## Final Reminders\n\n- **Every claim needs proof potential**: If you say \"10M videos analyzed,\" be ready to show the data\n- **Visual-first thinking**: Always start with Key Visual - if it's weak, the idea is weak\n- **Viewer is the hero**: Frame everything around \"you\" solving \"your\" problem\n- **Niche down to blow up**: Better to dominate one specific audience than appeal broadly to everyone\n- **Contrast creates curiosity**: The bigger the gap between A and B, the stronger the hook\n\nGenerate content ideas that are strategic, data-backed, psychologically optimized, and immediately actionable."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        2416,
+        1088
+      ],
+      "id": "432a6ea3-73f0-4f4f-b405-3c278e7cc2f9",
+      "name": "Content Brainstorm"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"data_synthesis\": {\n    \"key_patterns\": [\n      \"Pattern 1 with specific evidence\",\n      \"Pattern 2 with specific evidence\",\n      \"Pattern 3 with specific evidence\"\n    ],\n    \"emerging_trends\": [\n      \"Trend 1 - why it matters\",\n      \"Trend 2 - why it matters\"\n    ],\n    \"opportunity_summary\": \"2-3 sentence summary of the biggest content opportunity\"\n  },\n  \"content_ideas\": [\n    {\n      \"idea_number\": 1,\n      \"title\": \"Compelling title that uses curiosity/contrast\",\n      \"why_this_idea\": {\n        \"strategic_reasoning\": \"2-3 sentences explaining WHY this will perform\",\n        \"supporting_data\": \"Specific evidence from the scraped data\",\n        \"pain_point_solved\": \"Exact pain point and for whom\",\n        \"viral_potential\": \"Why this has viral potential (be specific)\"\n      },\n      \"topic_analysis\": {\n        \"target_audience\": \"Hyper-specific avatar (age, situation, current struggle)\",\n        \"core_pain_point\": \"Which Horseman + specific frustration\",\n        \"the_contrast\": {\n          \"common_belief_a\": \"What audience currently thinks/does\",\n          \"contrarian_take_b\": \"Your unique angle (must create curiosity gap)\"\n        }\n      },\n      \"content_overview\": \"2-3 paragraphs: what you'll show, key insights, value proposition\",\n      \"hook_strategy\": {\n        \"selected_archetype\": \"Choose ONE: Fortune Teller, Investigator, Contrarian, Teacher, Experimenter, or Magician\",\n        \"multi_modal_components\": {\n          \"key_visual\": \"DETAILED description of first 2 seconds (most important)\",\n          \"text_hook\": \"3-5 bold words on screen\",\n          \"spoken_hook\": {\n            \"line_1\": \"Context lean-in (establish topic clarity)\",\n            \"line_2\": \"Scroll stop interjection (use 'but' or contrast word)\",\n            \"line_3\": \"Contrarian snapback (create curiosity gap)\"\n          },\n          \"audio_hook\": \"Specific sound effect or music cue\"\n        }\n      },\n      \"storyline_outline\": {\n        \"intro\": {\n          \"click_confirmation\": \"Confirm hook promise immediately\",\n          \"plan\": \"State what you'll show (numbered list preferred)\"\n        },\n        \"point_1\": {\n          \"title\": \"Second-Best Point (blow away expectations early)\",\n          \"context\": \"What this point is\",\n          \"application\": \"How to use/implement it\",\n          \"framing\": \"Why it matters/works\"\n        },\n        \"rehooking_transition\": \"Create urgency using contrast (use 'but' or 'however')\",\n        \"point_2\": {\n          \"title\": \"Best Point (establish escalating value pattern)\",\n          \"context\": \"What this killer point is\",\n          \"application\": \"How to implement\",\n          \"framing\": \"Why this is the game-changer\"\n        },\n        \"the_dance\": {\n          \"point_3\": \"Context → Conflict ('but...') → Consequence ('therefore...')\",\n          \"point_4\": \"Continue the rhythm\",\n          \"point_5\": \"If applicable - build to climax\"\n        },\n        \"outro\": {\n          \"high_note_summary\": \"Recap transformation/value provided\",\n          \"last_dab\": \"Memorable final line (should loop to hook)\",\n          \"cta\": \"Clear call to action\"\n        }\n      },\n      \"quality_checklist\": {\n        \"avoids_hook_mistakes\": {\n          \"no_delay\": true,\n          \"no_confusion\": true,\n          \"no_irrelevance\": true,\n          \"no_disinterest\": true\n        },\n        \"multi_modal_alignment\": {\n          \"key_visual_compelling\": true,\n          \"text_supports_visual\": true,\n          \"spoken_creates_contrast\": true,\n          \"max_comprehension\": true\n        },\n        \"strategic_value\": {\n          \"differentiated\": true,\n          \"specific_audience\": true,\n          \"on_target_virality\": true,\n          \"genuine_value\": true\n        },\n        \"storyline_structure\": {\n          \"strategic_point_order\": true,\n          \"uses_but_therefore\": true,\n          \"includes_rehooking\": true,\n          \"starts_with_end\": true\n        }\n      }\n    }\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2592,
+        1248
+      ],
+      "id": "6a7dc6e0-8dbe-49fd-8548-50e2c27c7dd9",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output.content_ideas",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        2720,
+        1088
+      ],
+      "id": "2e02257f-a635-484b-9b2b-c07294684d13",
+      "name": "Ideas"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {
+          "maxTokens": 32768
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        368,
+        1360
+      ],
+      "id": "904b1207-b52a-4b36-af1b-4552aa983889",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "FmfSmUwD5UXUIgmM",
+          "name": "OpenAi account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are a JSON formatting assistant. Your only job is to extract insights from the input text and return them as a valid JSON array.\n\nRules:\n1. Extract all 5 stories from the input\n2. Each story must have a \"Topic\", \"Key Insights\", \"Visual Analogy\", and \"Most Benefited Niche\" field\n3. The \"Key Insights\" section appears immediately after each Topic header and continues until another labeled section begins (e.g., “Visual Analogy” or “Most Benefited Niches”).\n4. Remove all citation markers like [1], [2], [1][2] from the content\n5. Return ONLY the JSON array, no explanatory text before or after\n6. Ensure the JSON is valid and parseable\n\nReturn format:\n[\n  {\n    \"Topic\": \"Add topic here\",\n    \"Key Insights\": \"Add insights here\",\n    \"Visual_Analogy\": \"Add visual analogies here\",\n    \"Most_Benefited_Niche\": \"Add most benefited niches here\"\n  }\n]"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        368,
+        1216
+      ],
+      "id": "4c78250b-e09c-4254-9a99-3825da51693f",
+      "name": "Format Message",
+      "retryOnFail": true,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        784,
+        1216
+      ],
+      "id": "8e3236a6-2274-4c47-ae9b-a1ba41dfa5c1",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "content": "## 📄 Social Media Story Scraper \n## [Created by sirlifehacker](https://www.skool.com/the-ai-entrepreneur-circle-5658)\n\n## How it Works\n### - Scrapes X and the internet to identify early trending stories in your niche (for me I chose AI)\n### - Analyzes patterns and trending topics\n### - Creates an elite content idea + strategy based on trending topic\n### - Generates an email report with findings\n### - Uploads data to Notion\n\n## APIs Needed\n### - [Apify](https://www.apify.com?fpr=92rji7)\n### - [Perplexity](https://www.perplexity.ai/)\n\n## Resources\n### - [Twitter Scraper](https://www.apify.com?fpr=92rji7)\n### - [YouTube Walkthrough](https://youtu.be/HidLFnkrAj4)\n\n## Costs per Run\n### - X Scraper: $0.04/1,000 Tweets",
+        "height": 912,
+        "width": 512,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -880,
+        528
+      ],
+      "id": "6a0cb099-e784-45d4-8ade-22caf00cd187",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## X/Twitter Scraper\n- grabs top 50-100 tweets from any \"List\"\n- identifies top 10 tweets & trending topics",
+        "height": 416,
+        "width": 1584,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        448
+      ],
+      "id": "b8eeae38-850a-4f6d-b7ce-af7a1abbe747",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Web Research\n### - does a research deep dive on the top stories from X/Twitter ",
+        "height": 480,
+        "width": 1600,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        1024
+      ],
+      "id": "5709dc0d-c2f9-4088-b901-7cbba47493f1",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Content Ideas & Report Generation\n### - daily email report created\n### - notion data uploaded",
+        "height": 864,
+        "width": 1264,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        560
+      ],
+      "id": "f07416f7-cbed-4dd3-a64e-c3249ea3c338",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 896,
+        "width": 1296,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1824,
+        544
+      ],
+      "id": "afccbd2d-f4f7-468a-a338-eb1bb43399f5",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 944,
+        "width": 544
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -896,
+        512
+      ],
+      "id": "62541b08-f9ac-4164-8e47-2f2ac6bc0c50",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -272,
+        880
+      ],
+      "id": "6baa1f77-de89-49b1-b5d9-6d95f24241b0",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "[\n  {\n    \"topic\": \"AI Video Generation and UGC Automation\",\n    \"key_insight\": \"...\",\n    \"visual_analogy\": \"...\",\n    \"Most_Benefited_Niches\": \"...\"\n  },\n  {\n    \"topic\": \"Google Labs Pomelli: AI Marketing Tool\",\n    \"key_insight\": \"...\",\n    \"visual_analogy\": \"...\",\n    \"Most_Benefited_Niches\": \"...\"\n  },\n  {\n    \"topic\": \"Real-Time Voice AI and Conversational Agents\",\n    \"key_insight\": \"...\",\n    \"visual_analogy\": \"...\",\n    \"Most_Benefited_Niches\": \"...\"\n  },\n  {\n    \"topic\": \"...\",\n    \"key_insight\": \"...\",\n    \"visual_analogy\": \"...\",\n    \"Most_Benefited_Niches\": \"...\"\n  },\n  {\n    \"topic\": \"...\",\n    \"key_insight\": \"...\",\n    \"visual_analogy\": \"...\",\n    \"Most_Benefited_Niches\": \"...\"\n  }\n]\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        624,
+        1344
+      ],
+      "id": "3138d522-9d7d-44b8-bab8-7f4a0612c87a",
+      "name": "Structured Output Parser4"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "29a55c8e-c066-80fd-ba13-c6f2823b6690",
+          "mode": "list",
+          "cachedResultName": "AI Trending Topics",
+          "cachedResultUrl": "https://www.notion.so/29a55c8ec06680fdba13c6f2823b6690"
+        },
+        "title": "Trending Topics",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Topic|title",
+              "title": "={{ $json.output.topic }}"
+            },
+            {
+              "key": "Visual Analogy|rich_text",
+              "textContent": "={{ $json.output.visual_analogy }}"
+            },
+            {
+              "key": "Key Insight|rich_text",
+              "textContent": "={{ $json.output.key_insight }}"
+            },
+            {
+              "key": "Most Benefited Niches|rich_text",
+              "textContent": "={{ $json.output.Most_Benefited_Niches }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1104,
+        1216
+      ],
+      "id": "69bedaa7-bba3-4a63-bd84-c19e6c10c6c9",
+      "name": "AI Trending Topics CRM",
+      "credentials": {
+        "notionApi": {
+          "id": "8W7fGjc0h1cJbiGi",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "29a55c8e-c066-804d-9e4e-e7d9d2521725",
+          "mode": "list",
+          "cachedResultName": "Twitter Stories",
+          "cachedResultUrl": "https://www.notion.so/29a55c8ec066804d9e4ee7d9d2521725"
+        },
+        "title": "Twitter Stories",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "tweet ID|title",
+              "title": "={{ $json.tweet_id }}"
+            },
+            {
+              "key": "Tweet Text|rich_text",
+              "textContent": "={{ $json.text }}"
+            },
+            {
+              "key": "Tweet URL|url",
+              "urlValue": "={{ $json.url }}"
+            },
+            {
+              "key": "Like Count|number",
+              "numberValue": "={{ $json.like_count }}"
+            },
+            {
+              "key": "Engagement Score|number",
+              "numberValue": "={{ $json.engagement_score }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1280,
+        688
+      ],
+      "id": "2a8bfd9a-6be7-4406-9a58-9456619f1583",
+      "name": "Twitter Stories Database",
+      "alwaysOutputData": true,
+      "credentials": {
+        "notionApi": {
+          "id": "8W7fGjc0h1cJbiGi",
+          "name": "Notion account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "351102ba-b3b9-4778-ba42-200a730cf431",
+              "name": "X List",
+              "value": "https://x.com/i/lists/1944053485882028279",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        32,
+        640
+      ],
+      "id": "d9f98d8a-12a9-4f3b-b7cf-870a822540d8",
+      "name": "Set X List URL"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "29a55c8e-c066-80fe-ad49-cba783d27816",
+          "mode": "list",
+          "cachedResultName": "Content Hub",
+          "cachedResultUrl": "https://www.notion.so/29a55c8ec06680fead49cba783d27816"
+        },
+        "title": "={{ $json.title }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Content Overview|rich_text",
+              "textContent": "={{ $json.content_overview }}"
+            },
+            {
+              "key": "Contrarian Take|rich_text",
+              "textContent": "={{ $json.topic_analysis.the_contrast.common_belief_a }}\n\n{{ $json.topic_analysis.the_contrast.contrarian_take_b }}"
+            },
+            {
+              "key": "Emerging Trends|rich_text",
+              "textContent": "={{ $('Content Brainstorm').item.json.output.data_synthesis.emerging_trends[0] }}\n\n{{ $('Content Brainstorm').item.json.output.data_synthesis.emerging_trends[1] }}\n\n\n{{ $('Content Brainstorm').item.json.output.data_synthesis.emerging_trends[2] }}\n\n{{ $('Content Brainstorm').item.json.output.data_synthesis.emerging_trends[3] }}\n\n{{ $('Content Brainstorm').item.json.output.data_synthesis.emerging_trends[4] }}"
+            },
+            {
+              "key": "Hooks!|rich_text",
+              "textContent": "={{ $json.hook_strategy.multi_modal_components.spoken_hook.line_1 }}\n\n{{ $json.hook_strategy.multi_modal_components.spoken_hook.line_2 }}\n\n{{ $json.hook_strategy.multi_modal_components.spoken_hook.line_3 }}"
+            },
+            {
+              "key": "Key Visual|rich_text",
+              "textContent": "={{ $json.hook_strategy.multi_modal_components.key_visual }}"
+            },
+            {
+              "key": "Outro|rich_text",
+              "textContent": "={{ $json.storyline_outline.outro.high_note_summary }}\n\n{{ $json.storyline_outline.outro.last_dab }}\n\n{{ $json.storyline_outline.outro.cta }}"
+            },
+            {
+              "key": "Storyline|rich_text",
+              "textContent": "={{ $json.storyline_outline.intro.click_confirmation }}\n\n{{ $json.storyline_outline.intro.plan }}\n\n{{ $json.storyline_outline.point_1.title }}\n\n{{ $json.storyline_outline.point_1.context }}\n\n{{ $json.storyline_outline.point_1.application }}\n\n{{ $json.storyline_outline.point_1.framing }}\n\n{{ $json.storyline_outline.rehooking_transition }}\n\n{{ $json.storyline_outline.point_2.title }}\n\n{{ $json.storyline_outline.point_2.context }}\n\n{{ $json.storyline_outline.point_2.application }}\n\n{{ $json.storyline_outline.point_2.framing }}\n\n{{ $json.storyline_outline.the_dance.point_3 }}\n\n{{ $json.storyline_outline.the_dance.point_4 }}\n\n{{ $json.storyline_outline.the_dance.point_5 }}"
+            },
+            {
+              "key": "Outro|rich_text",
+              "textContent": "={{ $json.storyline_outline.outro.high_note_summary }}\n\n{{ $json.storyline_outline.outro.last_dab }}\n\n{{ $json.storyline_outline.outro.cta }}"
+            },
+            {
+              "key": "Target Audience|rich_text",
+              "textContent": "={{ $json.topic_analysis.target_audience }}"
+            },
+            {
+              "key": "Pain-Point Solved|rich_text",
+              "textContent": "={{ $json.topic_analysis.core_pain_point }}"
+            },
+            {
+              "key": "Key Patterns|rich_text",
+              "textContent": "={{ $('Content Brainstorm').item.json.output.data_synthesis.key_patterns[0] }}\n\n{{ $('Content Brainstorm').item.json.output.data_synthesis.key_patterns[1] }}\n\n{{ $('Content Brainstorm').item.json.output.data_synthesis.key_patterns[2] }}\n\n{{ $('Content Brainstorm').item.json.output.data_synthesis.key_patterns[3] }}\n\n{{ $('Content Brainstorm').item.json.output.data_synthesis.key_patterns[4] }}"
+            },
+            {
+              "key": "Opportunity Summary|rich_text",
+              "textContent": "={{ $('Content Brainstorm').item.json.output.data_synthesis.opportunity_summary }}"
+            },
+            {
+              "key": "Strategic Reasoning|rich_text",
+              "textContent": "={{ $('Content Brainstorm').item.json.output.content_ideas[0].why_this_idea.strategic_reasoning }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        2912,
+        1088
+      ],
+      "id": "cf9e373f-8e7c-46b8-88eb-5a787f0c3167",
+      "name": "Content Ideas ♕",
+      "credentials": {
+        "notionApi": {
+          "id": "8W7fGjc0h1cJbiGi",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "sonar-pro",
+        "messages": {
+          "message": [
+            {
+              "content": "=You are a research assistant. For each of the following trending topics, find and summarize the most recent & credible information available online. Focus on finding insights that are unique, lesser known, and novel. \n\nTopics:\n1: {{ $json.output.trending_topics[0].title }}\n{{ $json.output.trending_topics[0].description }}\n\n2: {{ $json.output.trending_topics[1].title }}\n{{ $json.output.trending_topics[1].description }}\n\n3:{{ $json.output.trending_topics[2].title }}\n{{ $json.output.trending_topics[2].description }}\n\n4: {{ $json.output.trending_topics[3].title }}\n{{ $json.output.trending_topics[3].description }}\n\n5: {{ $json.output.trending_topics[4].title }}\n{{ $json.output.trending_topics[4].description }}\n\nFor each topic, output:\n\n- A 7-10 sentence overview of the insights found\n\n- A visual analogy of the key insight from the topic\n\n- What niches stand to benefit most from the topic and how."
+            }
+          ]
+        },
+        "simplify": true,
+        "options": {},
+        "requestOptions": {}
+      },
+      "id": "4a8dd39d-aff3-4236-9a61-a16f833f3685",
+      "name": "Perplexity Researcher",
+      "type": "n8n-nodes-base.perplexity",
+      "typeVersion": 1,
+      "position": [
+        112,
+        1216
+      ],
+      "credentials": {
+        "perplexityApi": {
+          "id": "sSHM08Ing7oHdYO2",
+          "name": "Perplexity account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Scrape X": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Twitter Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser3": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Twitter Analysis",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Twitter Analysis": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Perplexity Researcher",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Aggregate3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Report Generator": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate3": {
+      "main": [
+        [
+          {
+            "node": "Report Generator",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Content Brainstorm",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Report Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Content Brainstorm",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Twitter Stories Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Twitter Analysis",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Content Brainstorm",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content Brainstorm": {
+      "main": [
+        [
+          {
+            "node": "Ideas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ideas": {
+      "main": [
+        [
+          {
+            "node": "Content Ideas ♕",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Format Message",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Message": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "AI Trending Topics CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Set X List URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser4": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Format Message",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set X List URL": {
+      "main": [
+        [
+          {
+            "node": "Scrape X",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perplexity Researcher": {
+      "main": [
+        [
+          {
+            "node": "Format Message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ea2eb8a5-f6a7-4b88-bf8c-a9d0a26dfc10",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "162f93b0084d31a899385ee0965356c60b41fe5853dcd87efd89b524b9e9fd79"
+  },
+  "id": "6DkST2n8lZExwp0a",
+  "tags": []
+}
